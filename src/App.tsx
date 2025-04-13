@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import styles from "./App.module.css";
 import { TracksActions } from "./components/tracks-actions";
@@ -34,8 +34,6 @@ const App = () => {
     hours: 0,
     date: new Date().toISOString().split("T")[0]
   });
-  const tableContainerRef = useRef<HTMLDivElement>(null);
-  const currentDayRef = useRef<HTMLTableCellElement>(null);
 
   useEffect(() => {
     fetchTracks();
@@ -61,25 +59,6 @@ const App = () => {
   useEffect(() => {
     fetchTracks();
   }, [selectedMonth, selectedYear]);
-
-  useEffect(() => {
-    const today = new Date();
-    if (
-      today.getMonth() === selectedMonth &&
-      today.getFullYear() === selectedYear &&
-      currentDayRef.current &&
-      tableContainerRef.current
-    ) {
-      const container = tableContainerRef.current;
-      const cell = currentDayRef.current;
-      const containerWidth = container.offsetWidth;
-      const cellLeft = cell.offsetLeft;
-      const cellWidth = cell.offsetWidth;
-
-      // Center the current day in the container
-      container.scrollLeft = cellLeft - containerWidth / 2 + cellWidth / 2;
-    }
-  }, [selectedMonth, selectedYear, hideWeekends]);
 
   const fetchTracks = async () => {
     try {
@@ -319,23 +298,22 @@ const App = () => {
       </div>
 
       <TracksTable
-        tableContainerRef={tableContainerRef}
-        days={getVisibleDays().map(day => (
-          <TracksDayHeadCell
-            key={day}
-            day={day}
-            selectedMonth={selectedMonth}
-            selectedYear={selectedYear}
-            currentDayRef={currentDayRef}
-            getWeekday={getWeekday}
-          />
-        ))}
-      >
-        {getUniqueTasks().map((task, index) => (
+        renderDays={currentDayRef =>
+          getVisibleDays().map(day => (
+            <TracksDayHeadCell
+              key={day}
+              day={day}
+              selectedMonth={selectedMonth}
+              selectedYear={selectedYear}
+              currentDayRef={currentDayRef}
+              getWeekday={getWeekday}
+            />
+          ))
+        }
+        renderTask={task => (
           <TracksTaskRow
             getTaskTotal={getTaskTotal}
             task={task}
-            key={index}
             days={getVisibleDays().map((day, index) => (
               <TracksCell
                 day={day}
@@ -359,13 +337,16 @@ const App = () => {
               />
             ))}
           />
-        ))}
-        <TracksSummaryRow
-          getMonthTotal={getMonthTotal}
-          getVisibleDays={getVisibleDays}
-          getDayTotal={getDayTotal}
-        />
-      </TracksTable>
+        )}
+        tasks={getUniqueTasks()}
+        summary={
+          <TracksSummaryRow
+            getMonthTotal={getMonthTotal}
+            getVisibleDays={getVisibleDays}
+            getDayTotal={getDayTotal}
+          />
+        }
+      ></TracksTable>
 
       {isModalOpen && (
         <div
