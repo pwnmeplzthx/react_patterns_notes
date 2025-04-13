@@ -1,11 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./tracks-table.module.css";
 
 export function TracksTable({
   renderDays,
-  tasks,
   renderTask,
-  summary
+  summary,
+  tasks,
 }: {
   renderDays: (ref: React.RefObject<HTMLTableCellElement>) => React.ReactNode;
   tasks: string[];
@@ -14,7 +14,6 @@ export function TracksTable({
 }) {
   const tableContainerRef = useRef<HTMLDivElement>(null);
   const currentDayRef = useRef<HTMLTableCellElement>(null);
-
   useEffect(() => {
     if (currentDayRef.current && tableContainerRef.current) {
       const container = tableContainerRef.current;
@@ -39,7 +38,7 @@ export function TracksTable({
           </tr>
         </thead>
         <tbody>
-          {tasks.map(task => renderTask(task))}
+          {tasks.map((task) => renderTask(task))}
           {summary}
         </tbody>
       </table>

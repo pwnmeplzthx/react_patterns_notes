@@ -3,7 +3,7 @@ import styles from "./table-track.module.css";
 
 export function TableTrack({
   track,
-  actions
+  actions,
 }: {
   track: Track;
   actions: React.ReactNode;

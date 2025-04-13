@@ -2,26 +2,32 @@ import { Track } from "../App";
 import styles from "./tracks-actions.module.css";
 
 export function TracksActions({
-  handleUpdateTrack,
-  handleDeleteTrack,
-  track
+  onUpdateTrack,
+  onDeleteTrack,
+  track,
 }: {
   track: Track;
-  handleUpdateTrack: (e: React.MouseEvent, track: Track) => void;
-  handleDeleteTrack: (e: React.MouseEvent, trackId: string) => void;
+  onUpdateTrack: (track: Track) => void;
+  onDeleteTrack: (trackId: string) => void;
 }) {
   return (
     <>
       <button
         className={styles.actionButton}
-        onClick={e => handleUpdateTrack(e, track)}
+        onClick={(e) => {
+          e.stopPropagation();
+          onUpdateTrack(track);
+        }}
         title="Edit"
       >
         ✎
       </button>
       <button
         className={`${styles.actionButton} ${styles.deleteButton}`}
-        onClick={e => handleDeleteTrack(e, track.id)}
+        onClick={(e) => {
+          e.stopPropagation();
+          onDeleteTrack(track.id);
+        }}
         title="Delete"
       >
         ×

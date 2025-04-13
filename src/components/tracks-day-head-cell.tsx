@@ -4,14 +4,15 @@ export function TracksDayHeadCell({
   selectedMonth,
   selectedYear,
   currentDayRef,
-  getWeekday
 }: {
   day: number;
   selectedMonth: number;
   selectedYear: number;
   currentDayRef: React.RefObject<HTMLTableCellElement>;
-  getWeekday: (day: number) => string;
 }) {
+  const date = new Date(selectedYear, selectedMonth, day);
+  const weakday = date.toLocaleDateString("en-US", { weekday: "short" });
+
   const isCurrentDay =
     new Date().getDate() === day &&
     new Date().getMonth() === selectedMonth &&
@@ -24,7 +25,7 @@ export function TracksDayHeadCell({
     >
       <div className={styles.dayHeader}>
         <span>{day}</span>
-        <span className={styles.weekday}>{getWeekday(day)}</span>
+        <span className={styles.weekday}>{weakday}</span>
       </div>
     </th>
   );
