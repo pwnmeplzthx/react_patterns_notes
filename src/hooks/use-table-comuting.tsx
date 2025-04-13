@@ -2,7 +2,7 @@ import { Track } from "./use-tracks";
 
 export function useTableComputing({ tracks }: { tracks: Track[] }) {
   const getDayTracks = (day: number, task: string) => {
-    return tracks.filter((track) => {
+    return tracks.filter(track => {
       const trackDate = new Date(track.date);
       return trackDate.getDate() === day && track.task === task;
     });
@@ -10,7 +10,7 @@ export function useTableComputing({ tracks }: { tracks: Track[] }) {
 
   const getDayTotal = (day: number) => {
     return tracks
-      .filter((track) => {
+      .filter(track => {
         const trackDate = new Date(track.date);
         return trackDate.getDate() === day;
       })
@@ -19,7 +19,7 @@ export function useTableComputing({ tracks }: { tracks: Track[] }) {
 
   const getTaskTotal = (task: string) => {
     return tracks
-      .filter((track) => {
+      .filter(track => {
         return track.task === task;
       })
       .reduce((sum, track) => sum + track.hours, 0);
@@ -33,6 +33,6 @@ export function useTableComputing({ tracks }: { tracks: Track[] }) {
     getDayTracks,
     getDayTotal,
     getTaskTotal,
-    getTotal,
+    getTotal
   };
 }

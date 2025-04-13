@@ -4,7 +4,7 @@ import styles from "./tracks-actions.module.css";
 export function TracksActions({
   onUpdateTrack,
   onDeleteTrack,
-  track,
+  track
 }: {
   track: Track;
   onUpdateTrack: (track: Track) => void;
@@ -14,7 +14,7 @@ export function TracksActions({
     <>
       <button
         className={styles.actionButton}
-        onClick={(e) => {
+        onClick={e => {
           e.stopPropagation();
           onUpdateTrack(track);
         }}
@@ -24,7 +24,7 @@ export function TracksActions({
       </button>
       <button
         className={`${styles.actionButton} ${styles.deleteButton}`}
-        onClick={(e) => {
+        onClick={e => {
           e.stopPropagation();
           onDeleteTrack(track.id);
         }}

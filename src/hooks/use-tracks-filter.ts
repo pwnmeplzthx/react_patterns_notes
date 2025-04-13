@@ -17,10 +17,10 @@ export function useTracksFilter({ tracks }: { tracks: Track[] }) {
 
   const visibleDays = useMemo(() => {
     const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
-    return hideWeekends ? days.filter((day) => !isWeekend(day)) : days;
+    return hideWeekends ? days.filter(day => !isWeekend(day)) : days;
   }, [hideWeekends, selectedMonth, selectedYear]);
 
-  const filteredTracks = tracks.filter((track) => {
+  const filteredTracks = tracks.filter(track => {
     const trackDate = new Date(track.date);
     return (
       trackDate.getMonth() === selectedMonth &&
@@ -35,12 +35,12 @@ export function useTracksFilter({ tracks }: { tracks: Track[] }) {
     filters: {
       selectedMonth,
       selectedYear,
-      hideWeekends,
+      hideWeekends
     },
     setFilters: {
       setSelectedMonth,
       setSelectedYear,
-      setHideWeekends,
-    },
+      setHideWeekends
+    }
   };
 }

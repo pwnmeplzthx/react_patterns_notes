@@ -6,7 +6,7 @@ export function TracksCell({
   day,
   task,
   onCellClick,
-  tracks,
+  tracks
 }: {
   getDayTracks: (day: number, task: string) => Track[];
   day: number;

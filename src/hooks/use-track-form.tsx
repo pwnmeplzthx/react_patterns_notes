@@ -8,7 +8,7 @@ export function useTrackForm({
   selectedTrack,
 
   trackCreate,
-  trackUpdate,
+  trackUpdate
 }: {
   selectedCell: {
     day: number;
@@ -24,7 +24,7 @@ export function useTrackForm({
     name: "",
     task: "",
     hours: 0,
-    date: new Date().toISOString().split("T")[0],
+    date: new Date().toISOString().split("T")[0]
   });
 
   useEffect(() => {
@@ -33,20 +33,20 @@ export function useTrackForm({
         name: selectedTrack.name,
         task: selectedTrack.task,
         hours: selectedTrack.hours,
-        date: selectedTrack.date,
+        date: selectedTrack.date
       });
     } else if (selectedCell) {
-      setFormData((prev) => ({
+      setFormData(prev => ({
         ...prev,
         task: selectedCell.task,
-        date: `${selectedYear}-${String(selectedMonth + 1).padStart(2, "0")}-${String(selectedCell.day).padStart(2, "0")}`,
+        date: `${selectedYear}-${String(selectedMonth + 1).padStart(2, "0")}-${String(selectedCell.day).padStart(2, "0")}`
       }));
     } else {
       setFormData({
         name: "",
         task: "",
         hours: 0,
-        date: new Date().toISOString().split("T")[0],
+        date: new Date().toISOString().split("T")[0]
       });
     }
   }, [selectedCell, selectedMonth, selectedYear, selectedTrack]);
@@ -55,9 +55,9 @@ export function useTrackForm({
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
+    setFormData(prev => ({
       ...prev,
-      [name]: name === "hours" ? parseFloat(value) || 0 : value,
+      [name]: name === "hours" ? parseFloat(value) || 0 : value
     }));
   };
 
@@ -70,14 +70,14 @@ export function useTrackForm({
         name: formData.name,
         task: formData.task,
         hours: formData.hours,
-        date: formData.date,
+        date: formData.date
       });
     } else {
       trackCreate({
         name: formData.name,
         task: formData.task,
         hours: formData.hours,
-        date: formData.date,
+        date: formData.date
       });
     }
   };
@@ -85,6 +85,6 @@ export function useTrackForm({
   return {
     formData,
     handleInputChange,
-    handleSubmit,
+    handleSubmit
   };
 }

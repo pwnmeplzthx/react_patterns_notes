@@ -7,7 +7,7 @@ export function TracksFilters({
   setSelectedMonth,
   setSelectedYear,
   setHideWeekends,
-  actions,
+  actions
 }: {
   selectedMonth: number;
   selectedYear: number;
@@ -29,7 +29,7 @@ export function TracksFilters({
     "September",
     "October",
     "November",
-    "December",
+    "December"
   ];
 
   return (
@@ -38,7 +38,7 @@ export function TracksFilters({
       <select
         className={styles.select}
         value={selectedMonth}
-        onChange={(e) => setSelectedMonth(parseInt(e.target.value))}
+        onChange={e => setSelectedMonth(parseInt(e.target.value))}
       >
         {months.map((month, index) => (
           <option key={month} value={index}>
@@ -49,15 +49,13 @@ export function TracksFilters({
       <select
         className={styles.select}
         value={selectedYear}
-        onChange={(e) => setSelectedYear(parseInt(e.target.value))}
+        onChange={e => setSelectedYear(parseInt(e.target.value))}
       >
-        {Array.from({ length: 5 }, (_, i) => selectedYear - 2 + i).map(
-          (year) => (
-            <option key={year} value={year}>
-              {year}
-            </option>
-          )
-        )}
+        {Array.from({ length: 5 }, (_, i) => selectedYear - 2 + i).map(year => (
+          <option key={year} value={year}>
+            {year}
+          </option>
+        ))}
       </select>
       <div className={styles.checkboxContainer}>
         <input
@@ -65,7 +63,7 @@ export function TracksFilters({
           id="hideWeekends"
           className={styles.checkbox}
           checked={hideWeekends}
-          onChange={(e) => setHideWeekends(e.target.checked)}
+          onChange={e => setHideWeekends(e.target.checked)}
         />
         <label htmlFor="hideWeekends" className={styles.checkboxLabel}>
           Hide Weekends

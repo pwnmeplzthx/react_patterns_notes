@@ -34,8 +34,8 @@ export function useTracks() {
       const response = await fetch(`http://localhost:3000/tracks/${trackId}`, {
         method: "DELETE",
         headers: {
-          "Content-Type": "application/json",
-        },
+          "Content-Type": "application/json"
+        }
       });
       if (response.ok) {
         fetchTracks();
@@ -52,9 +52,9 @@ export function useTracks() {
       const response = await fetch(`http://localhost:3000/tracks/${track.id}`, {
         method: "PUT",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify(track),
+        body: JSON.stringify(track)
       });
 
       if (response.ok) {
@@ -71,15 +71,15 @@ export function useTracks() {
     try {
       const body = {
         ...track,
-        id: nanoid(),
+        id: nanoid()
       };
 
       const response = await fetch("http://localhost:3000/tracks", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify(body),
+        body: JSON.stringify(body)
       });
 
       if (response.ok) {
@@ -96,6 +96,6 @@ export function useTracks() {
     tracks,
     trackDelete,
     trackUpdate,
-    trackCreate,
+    trackCreate
   };
 }

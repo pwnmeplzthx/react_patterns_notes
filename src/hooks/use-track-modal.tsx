@@ -42,6 +42,6 @@ export function useTrackModal() {
     trackClick,
     close,
     isOpenModal,
-    createClick,
+    createClick
   };
 }

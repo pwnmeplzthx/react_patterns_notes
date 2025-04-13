@@ -1,7 +1,7 @@
 export function TracksTaskRow({
   task,
   getTaskTotal,
-  days,
+  days
 }: {
   task: string;
   days: React.ReactNode;

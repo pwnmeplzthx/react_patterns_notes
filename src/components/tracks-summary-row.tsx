@@ -1,7 +1,7 @@
 export function TracksSummaryRow({
   getMonthTotal,
   visibleDays,
-  getDayTotal,
+  getDayTotal
 }: {
   getMonthTotal: () => number;
   visibleDays: number[];
@@ -10,7 +10,7 @@ export function TracksSummaryRow({
   return (
     <tr>
       <td>Total</td>
-      {visibleDays.map((day) => (
+      {visibleDays.map(day => (
         <td key={`total-${day}`}>{getDayTotal(day)}</td>
       ))}
       <td>{getMonthTotal()}</td>

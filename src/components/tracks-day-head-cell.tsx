@@ -3,7 +3,7 @@ export function TracksDayHeadCell({
   day,
   selectedMonth,
   selectedYear,
-  currentDayRef,
+  currentDayRef
 }: {
   day: number;
   selectedMonth: number;
