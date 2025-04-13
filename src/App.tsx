@@ -1,8 +1,15 @@
 import { useEffect, useState, useRef } from "react";
 import { nanoid } from "nanoid";
 import styles from "./App.module.css";
+import { TracksActions } from "./components/tracks-actions";
+import { TracksCell } from "./components/tracks-cell";
+import { TracksTaskRow } from "./components/tracks-task-row";
+import { TableTrack } from "./components/table-track";
+import { TracksSummaryRow } from "./components/tracks-summary-row";
+import { TracksDayHeadCell } from "./components/tracks-day-head-cell";
+import { TracksTable } from "./components/tracks-table";
 
-interface Track {
+export interface Track {
   id: string;
   name: string;
   task: string;
@@ -311,95 +318,54 @@ const App = () => {
         </div>
       </div>
 
-      <div className={styles.tableContainer} ref={tableContainerRef}>
-        <table className={styles.table}>
-          <thead>
-            <tr>
-              <th>Task</th>
-              {getVisibleDays().map(day => {
-                const isCurrentDay =
-                  new Date().getDate() === day &&
-                  new Date().getMonth() === selectedMonth &&
-                  new Date().getFullYear() === selectedYear;
-                return (
-                  <th
-                    key={day}
-                    ref={isCurrentDay ? currentDayRef : null}
-                    className={isCurrentDay ? styles.currentDay : undefined}
-                  >
-                    <div className={styles.dayHeader}>
-                      <span>{day}</span>
-                      <span className={styles.weekday}>{getWeekday(day)}</span>
-                    </div>
-                  </th>
-                );
-              })}
-              <th>Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            {getUniqueTasks().map(task => (
-              <tr key={task}>
-                <td>{task}</td>
-                {getVisibleDays().map(day => (
-                  <td
-                    key={`${day}-${task}`}
-                    className={styles.cell}
-                    onClick={() => handleCellClick(day, task)}
-                  >
-                    {(() => {
-                      const dayTracks = getDayTracks(day, task);
-                      if (dayTracks.length === 0) {
-                        return <div className={styles.emptyCell}>-</div>;
-                      }
-                      return (
-                        <div className={styles.trackList}>
-                          {dayTracks.map(track => (
-                            <div key={track.id} className={styles.track}>
-                              <div className={styles.trackContent}>
-                                <span className={styles.trackName}>
-                                  {track.name}
-                                </span>
-                                <span className={styles.trackHours}>
-                                  {track.hours}h
-                                </span>
-                              </div>
-                              <div className={styles.trackActions}>
-                                <button
-                                  className={styles.actionButton}
-                                  onClick={e => handleUpdateTrack(e, track)}
-                                  title="Edit"
-                                >
-                                  ✎
-                                </button>
-                                <button
-                                  className={`${styles.actionButton} ${styles.deleteButton}`}
-                                  onClick={e => handleDeleteTrack(e, track.id)}
-                                  title="Delete"
-                                >
-                                  ×
-                                </button>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      );
-                    })()}
-                  </td>
+      <TracksTable
+        tableContainerRef={tableContainerRef}
+        days={getVisibleDays().map(day => (
+          <TracksDayHeadCell
+            key={day}
+            day={day}
+            selectedMonth={selectedMonth}
+            selectedYear={selectedYear}
+            currentDayRef={currentDayRef}
+            getWeekday={getWeekday}
+          />
+        ))}
+      >
+        {getUniqueTasks().map((task, index) => (
+          <TracksTaskRow
+            getTaskTotal={getTaskTotal}
+            task={task}
+            key={index}
+            days={getVisibleDays().map((day, index) => (
+              <TracksCell
+                day={day}
+                task={task}
+                key={index}
+                getDayTracks={getDayTracks}
+                handleCellClick={handleCellClick}
+                tracks={getDayTracks(day, task).map(track => (
+                  <TableTrack
+                    key={track.id}
+                    track={track}
+                    actions={
+                      <TracksActions
+                        track={track}
+                        handleUpdateTrack={handleUpdateTrack}
+                        handleDeleteTrack={handleDeleteTrack}
+                      />
+                    }
+                  />
                 ))}
-                <td>{getTaskTotal(task)}</td>
-              </tr>
+              />
             ))}
-            <tr>
-              <td>Total</td>
-              {getVisibleDays().map(day => (
-                <td key={`total-${day}`}>{getDayTotal(day)}</td>
-              ))}
-              <td>{getMonthTotal()}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+          />
+        ))}
+        <TracksSummaryRow
+          getMonthTotal={getMonthTotal}
+          getVisibleDays={getVisibleDays}
+          getDayTotal={getDayTotal}
+        />
+      </TracksTable>
 
       {isModalOpen && (
         <div
