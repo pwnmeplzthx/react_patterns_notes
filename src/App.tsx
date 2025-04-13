@@ -11,8 +11,9 @@ import { useTracksFilter } from "./hooks/use-tracks-filter";
 import { TracksFilters } from "./components/tracks-filters";
 import { useTasks } from "./hooks/use-tasks";
 import { useTableComputing } from "./hooks/use-table-comuting";
-import { useTrackForm } from "./hooks/use-track-form";
-import { useTrackModal } from "./hooks/use-track-modal";
+import { TrackModal } from "./tracks-modal/components/track-modal";
+import { useTracksModalOpen } from "./tracks-modal/hooks/use-tracks-modal-open";
+import { TrackModalProvider } from "./tracks-modal/components/track-modal-context";
 
 export interface Track {
   id: string;
@@ -22,7 +23,7 @@ export interface Track {
   date: string;
 }
 
-const App = () => {
+const AppContent = () => {
   const { trackCreate, trackDelete, trackUpdate, tracks } = useTracks();
   const { filteredTracks, filters, setFilters, visibleDays } = useTracksFilter({
     tracks
@@ -35,23 +36,7 @@ const App = () => {
   const { getDayTotal, getDayTracks, getTaskTotal, getTotal } =
     useTableComputing({ tracks: filteredTracks });
 
-  const {
-    cellClick,
-    close,
-    createClick,
-    isOpenModal,
-    selectedCell,
-    selectedTrack,
-    trackClick
-  } = useTrackModal();
-
-  const { formData, handleInputChange, handleSubmit } = useTrackForm({
-    ...filters,
-    selectedCell,
-    selectedTrack,
-    trackCreate,
-    trackUpdate
-  });
+  const { cellClick, createClick, trackClick } = useTracksModalOpen();
 
   return (
     <div className={styles.container}>
@@ -113,87 +98,21 @@ const App = () => {
             getDayTotal={getDayTotal}
           />
         }
-      ></TracksTable>
-
-      {isOpenModal && (
-        <div
-          className={styles.modalOverlay}
-          onClick={() => {
-            close();
-          }}
-        >
-          <div className={styles.modal} onClick={e => e.stopPropagation()}>
-            <h2>{selectedTrack ? "Edit Track" : "Add Track"}</h2>
-            <form onSubmit={handleSubmit} className={styles.form}>
-              <div className={styles.formGroup}>
-                <label htmlFor="name">Name:</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-
-              <div className={styles.formGroup}>
-                <label htmlFor="task">Task:</label>
-                <input
-                  type="text"
-                  id="task"
-                  name="task"
-                  value={formData.task}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-
-              <div className={styles.formGroup}>
-                <label htmlFor="hours">Hours:</label>
-                <input
-                  type="number"
-                  id="hours"
-                  name="hours"
-                  value={formData.hours}
-                  onChange={handleInputChange}
-                  min="0"
-                  step="0.5"
-                  required
-                />
-              </div>
-
-              <div className={styles.formGroup}>
-                <label htmlFor="date">Date:</label>
-                <input
-                  type="date"
-                  id="date"
-                  name="date"
-                  value={formData.date}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-
-              <div className={styles.buttonGroup}>
-                <button type="submit" className={styles.button}>
-                  {selectedTrack ? "Update" : "Add"} Track
-                </button>
-                <button
-                  type="button"
-                  className={styles.button}
-                  onClick={() => close()}
-                  style={{ backgroundColor: "#6c757d" }}
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
+      />
+      <TrackModal
+        selectedMonth={filters.selectedMonth}
+        selectedYear={filters.selectedYear}
+        trackCreate={trackCreate}
+        trackUpdate={trackUpdate}
+      />
     </div>
   );
 };
 
-export default App;
+export default function App() {
+  return (
+    <TrackModalProvider>
+      <AppContent />
+    </TrackModalProvider>
+  );
+}

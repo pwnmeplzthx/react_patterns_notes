@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Track } from "./use-tracks";
+import { Track } from "../../App";
 
 export function useTrackModal() {
   const [isCreate, setIsCreate] = useState(false);
@@ -33,6 +33,7 @@ export function useTrackModal() {
   const close = () => {
     setSelectedCell(null);
     setSelectedTrack(null);
+    setIsCreate(false);
   };
 
   return {
