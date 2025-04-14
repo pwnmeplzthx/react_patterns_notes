@@ -82,9 +82,12 @@ export function useTrackForm({
     }
   };
 
+  const isEdit = !!selectedTrack;
+
   return {
     formData,
     handleInputChange,
-    handleSubmit
+    handleSubmit,
+    isEdit
   };
 }

@@ -5,8 +5,9 @@
 
 - [Slot](#slot) _(props drilling, god object)_
 - [Render props](#render-props) _(props drilling, god object)_
-- [Hooks flow](#hooks-flow)
-- [Local global states](#local-global-states)
+- [Hooks flow](#hooks-flow) _(god object)_
+- [Local global states](#local-global-states) _(god object)_
+- [Mediator](#mediator)
 
 ## Slot
 
@@ -103,3 +104,25 @@ _(props drilling, god object)_
 - ✅ Сокрытие подробностей
 - ✅ Увеличивает надежность (у внешнего кода нет доступа к большому количеству пропсов)
 - ❌ Провайдеры
+
+---
+
+&nbsp;
+
+## Mediator
+
+![](./schemes/mediator_pic.png)
+
+**Проблема**
+
+- Связи между компонентами размазаны по системе, и их сложно отследить
+
+**Решение**
+
+- Создать компонент/хук/фукнцию "медиатор", которые связывают другие компоненты вместе
+
+**Преимущества и недостатки**
+
+- ✅ Отделение связей в отдельный модуль - делает связи проще для понимания
+- ✅ Минимизирует связи модулей напрямую - увеличивает их надежность
+- ❌ Модули больше не могут взаимодействовать напрямую

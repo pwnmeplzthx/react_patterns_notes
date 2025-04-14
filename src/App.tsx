@@ -1,4 +1,3 @@
-import styles from "./App.module.css";
 import { TracksActions } from "./components/tracks-actions";
 import { TracksCell } from "./components/tracks-cell";
 import { TracksTaskRow } from "./components/tracks-task-row";
@@ -11,9 +10,11 @@ import { useTracksFilter } from "./hooks/use-tracks-filter";
 import { TracksFilters } from "./components/tracks-filters";
 import { useTasks } from "./hooks/use-tasks";
 import { useTableComputing } from "./hooks/use-table-comuting";
-import { TrackModal } from "./tracks-modal/components/track-modal";
 import { useTracksModalOpen } from "./tracks-modal/hooks/use-tracks-modal-open";
 import { TrackModalProvider } from "./tracks-modal/components/track-modal-context";
+import { TableLayout } from "./components/table-layout";
+import { ActionButton } from "./components/action-button";
+import { TrackModal } from "./tracks-modal/track-modal";
 
 export interface Track {
   id: string;
@@ -39,14 +40,12 @@ const AppContent = () => {
   const { cellClick, createClick, trackClick } = useTracksModalOpen();
 
   return (
-    <div className={styles.container}>
+    <TableLayout>
       <TracksFilters
         {...filters}
         {...setFilters}
         actions={
-          <button className={styles.button} onClick={() => createClick()}>
-            Add Track
-          </button>
+          <ActionButton onClick={() => createClick()}>Add Track</ActionButton>
         }
       />
 
@@ -105,7 +104,7 @@ const AppContent = () => {
         trackCreate={trackCreate}
         trackUpdate={trackUpdate}
       />
-    </div>
+    </TableLayout>
   );
 };
 

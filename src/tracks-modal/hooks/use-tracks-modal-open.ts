@@ -1,12 +1,7 @@
-import { useContext } from "react";
-import { trackModalContext } from "../components/track-modal-context";
+import { useTrackModalContext } from "../components/track-modal-context";
 
 export function useTracksModalOpen() {
-  const context = useContext(trackModalContext);
-  if (!context)
-    throw new Error(
-      "useTracksModalOpen must be used within TrackModalProvider"
-    );
+  const context = useTrackModalContext();
 
   return {
     cellClick: context.cellClick,
