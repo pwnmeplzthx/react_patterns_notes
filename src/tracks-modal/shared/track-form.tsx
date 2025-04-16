@@ -4,19 +4,22 @@ import styles from "./track-form.module.css";
 export function TrackForm({
   formData,
   onInputChange,
-  isEdit,
   onSubmit,
-  additionalActions,
-  onCancel
+  onCancel,
+  submitText = "Add Track",
+  disabled = {}
 }: {
   formData: Omit<Track, "id">;
-  onInputChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => void;
-  isEdit: boolean;
-  onSubmit: (e: React.FormEvent) => Promise<void>;
-  additionalActions?: React.ReactNode;
+  onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   onCancel: () => void;
+  submitText?: string;
+  disabled?: {
+    name?: boolean;
+    task?: boolean;
+    hours?: boolean;
+    date?: boolean;
+  };
 }) {
   return (
     <form onSubmit={onSubmit} className={styles.form}>
@@ -29,6 +32,7 @@ export function TrackForm({
           value={formData.name}
           onChange={onInputChange}
           required
+          disabled={disabled.name}
         />
       </div>
 
@@ -41,6 +45,7 @@ export function TrackForm({
           value={formData.task}
           onChange={onInputChange}
           required
+          disabled={disabled.task}
         />
       </div>
 
@@ -55,6 +60,7 @@ export function TrackForm({
           min="0"
           step="0.5"
           required
+          disabled={disabled.hours}
         />
       </div>
 
@@ -67,14 +73,14 @@ export function TrackForm({
           value={formData.date}
           onChange={onInputChange}
           required
+          disabled={disabled.date}
         />
       </div>
 
       <div className={styles.buttonGroup}>
         <button type="submit" className={styles.button}>
-          {isEdit ? "Update" : "Add"} Track
+          {submitText}
         </button>
-        {additionalActions}
         <button
           type="button"
           className={styles.button}

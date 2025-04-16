@@ -1,16 +1,14 @@
 import { useState } from "react";
-import { Track } from "../../App";
+import { Track } from "../../hooks/use-tracks";
+import { SelectedCell } from "./types";
 
 export function useTrackModal() {
   const [isCreate, setIsCreate] = useState(false);
-  const [selectedCell, setSelectedCell] = useState<{
-    day: number;
-    task: string;
-  } | null>(null);
+  const [selectedCell, setSelectedCell] = useState<SelectedCell | null>(null);
   const [selectedTrack, setSelectedTrack] = useState<Track | null>(null);
 
-  const cellClick = (day: number, task: string) => {
-    setSelectedCell({ day, task });
+  const cellClick = (selectedCell: SelectedCell) => {
+    setSelectedCell(selectedCell);
     setSelectedTrack(null); // Clear the selected track when a cell is clicked
     setIsCreate(true);
   };

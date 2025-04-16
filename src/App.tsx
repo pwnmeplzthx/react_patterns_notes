@@ -10,11 +10,13 @@ import { useTracksFilter } from "./hooks/use-tracks-filter";
 import { TracksFilters } from "./components/tracks-filters";
 import { useTasks } from "./hooks/use-tasks";
 import { useTableComputing } from "./hooks/use-table-comuting";
-import { useTracksModalOpen } from "./tracks-modal/hooks/use-tracks-modal-open";
-import { TrackModalProvider } from "./tracks-modal/components/track-modal-context";
+import { useTracksModalOpen } from "./tracks-modal/shared/use-tracks-modal-open";
 import { TableLayout } from "./components/table-layout";
 import { ActionButton } from "./components/action-button";
-import { TrackModal } from "./tracks-modal/track-modal";
+import { TrackModalProvider } from "./tracks-modal/shared/track-modal-provider";
+import { AddTrackModal } from "./tracks-modal/add-track/add-track-modal";
+import { AddTrackToCellModal } from "./tracks-modal/add-track-to-cell/add-track-to-cell-modal";
+import { UpdateTrackModal } from "./tracks-modal";
 
 export interface Track {
   id: string;
@@ -38,15 +40,12 @@ const AppContent = () => {
     useTableComputing({ tracks: filteredTracks });
 
   const { cellClick, createClick, trackClick } = useTracksModalOpen();
-
   return (
     <TableLayout>
       <TracksFilters
         {...filters}
         {...setFilters}
-        actions={
-          <ActionButton onClick={() => createClick()}>Add Track</ActionButton>
-        }
+        actions={<ActionButton onClick={createClick}>Add Track</ActionButton>}
       />
 
       <TracksTable
@@ -72,7 +71,13 @@ const AppContent = () => {
                 day={day}
                 task={task}
                 getDayTracks={getDayTracks}
-                onCellClick={cellClick}
+                onCellClick={() =>
+                  cellClick({
+                    ...filters,
+                    day,
+                    task
+                  })
+                }
                 tracks={getDayTracks(day, task).map(track => (
                   <TableTrack
                     key={track.id}
@@ -97,13 +102,11 @@ const AppContent = () => {
             getDayTotal={getDayTotal}
           />
         }
-      />
-      <TrackModal
-        selectedMonth={filters.selectedMonth}
-        selectedYear={filters.selectedYear}
-        trackCreate={trackCreate}
-        trackUpdate={trackUpdate}
-      />
+      ></TracksTable>
+
+      <AddTrackModal trackCreate={trackCreate} />
+      <AddTrackToCellModal trackCreate={trackCreate} />
+      <UpdateTrackModal trackUpdate={trackUpdate} />
     </TableLayout>
   );
 };

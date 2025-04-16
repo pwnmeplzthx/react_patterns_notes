@@ -5,7 +5,7 @@ export function ActionButton({
   onClick
 }: {
   children: React.ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
 }) {
   return (
     <button className={styles.button} onClick={onClick}>
