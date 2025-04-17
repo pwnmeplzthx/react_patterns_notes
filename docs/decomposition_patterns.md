@@ -7,8 +7,8 @@
 - [Render props](#render-props) _(props drilling, god object)_
 - [Hooks flow](#hooks-flow) _(god object)_
 - [Local global states](#local-global-states) _(god object)_
-- [Mediator](#mediator)
-- [Polymorphism](#polymorphism) _(ifelse)_
+- [Mediator](#mediator) _(урощает логику связей между компонентами)_
+- [Polymorphism](#polymorphism) _(упрощает ветвление логики)_
 - [Contextual DI](#contextual-di) _(god object)_
 
 ## Slot
@@ -70,6 +70,8 @@ _(props drilling, god object)_
 
 ## Hooks flow
 
+_(god object)_
+
 ![](./schemes/hooks_flow_pic.png)
 
 **Проблема**
@@ -90,6 +92,8 @@ _(props drilling, god object)_
 &nbsp;
 
 ## Local global states
+
+_(god object)_
 
 ![](./schemes/local_global_state_pic.png)
 
@@ -113,6 +117,8 @@ _(props drilling, god object)_
 
 ## Mediator
 
+_(урощает логику связей между компонентами)_
+
 ![](./schemes/mediator_pic.png)
 
 **Проблема**
@@ -134,6 +140,8 @@ _(props drilling, god object)_
 &nbsp;
 
 ## Polymorphism
+
+_(упрощает ветвление логики)_
 
 ![](./schemes/polymorphism_pic.png)
 
@@ -157,6 +165,8 @@ _(props drilling, god object)_
 &nbsp;
 
 ## Contextual DI
+
+_(god object)_
 
 ![](./schemes/contextual_di_pic.png)
 

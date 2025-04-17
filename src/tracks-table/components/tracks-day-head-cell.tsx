@@ -8,7 +8,7 @@ export function TracksDayHeadCell({
   day: number;
   selectedMonth: number;
   selectedYear: number;
-  currentDayRef: React.RefObject<HTMLTableCellElement>;
+  currentDayRef: React.RefObject<HTMLTableCellElement | null>;
 }) {
   const date = new Date(selectedYear, selectedMonth, day);
   const weakday = date.toLocaleDateString("en-US", { weekday: "short" });

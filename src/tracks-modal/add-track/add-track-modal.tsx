@@ -1,4 +1,4 @@
-import { Track } from "../../App";
+import { Track } from "@/tracks-table";
 import { TrackForm } from "../shared/track-form";
 import { TrackModalView } from "../shared/track-modal";
 import { useTrackModalContext } from "../shared/track-modal-context";

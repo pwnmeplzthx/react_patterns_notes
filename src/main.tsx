@@ -1,14 +1,10 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "./index.css";
-import App from "./App.tsx";
-import { TracksApiProvider } from "./hooks/tracks-api-context.tsx";
-import { mockTracksApi } from "./services/tracks-api.ts";
+import { router } from "./router";
+import { RouterProvider } from "react-router-dom";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <TracksApiProvider value={mockTracksApi}>
-      <App />
-    </TracksApiProvider>
+    <RouterProvider router={router} />
   </StrictMode>
 );

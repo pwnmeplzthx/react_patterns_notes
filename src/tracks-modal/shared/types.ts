@@ -3,4 +3,5 @@ export type SelectedCell = {
   task: string;
   selectedMonth: number;
   selectedYear: number;
+  hours?: number;
 };

@@ -1,13 +1,15 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import styles from "./tracks-table.module.css";
 
-export function TracksTable({
+export function TracksTableLayout({
   renderDays,
   renderTask,
   summary,
   tasks
 }: {
-  renderDays: (ref: React.RefObject<HTMLTableCellElement>) => React.ReactNode;
+  renderDays: (
+    ref: React.RefObject<HTMLTableCellElement | null>
+  ) => React.ReactNode;
   tasks: string[];
   renderTask: (task: string) => React.ReactNode;
   summary: React.ReactNode;

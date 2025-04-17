@@ -1,15 +1,15 @@
 import { nanoid } from "nanoid";
-import { Track } from "../App";
 import { TrackApi } from "../hooks/tracks-api-context";
+import { Track } from "../hooks/use-tracks";
 
 export const tracksApi: TrackApi = {
   fetchTracks: () => {
-    return fetch("http://localhost:3000/tracks").then(response =>
+    return fetch("http://localhost:3001/tracks").then(response =>
       response.json()
     );
   },
   deleteTrack: async (trackId: string) => {
-    const response = await fetch(`http://localhost:3000/tracks/${trackId}`, {
+    const response = await fetch(`http://localhost:3001/tracks/${trackId}`, {
       method: "DELETE"
     });
     if (!response.ok) {
@@ -19,7 +19,7 @@ export const tracksApi: TrackApi = {
     return response.json();
   },
   updateTrack: async (track: Track) => {
-    const response = await fetch(`http://localhost:3000/tracks/${track.id}`, {
+    const response = await fetch(`http://localhost:3001/tracks/${track.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(track)
@@ -32,7 +32,7 @@ export const tracksApi: TrackApi = {
     return response.json();
   },
   createTrack: async (track: Omit<Track, "id">) => {
-    const response = await fetch("http://localhost:3000/tracks", {
+    const response = await fetch("http://localhost:3001/tracks", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(track)

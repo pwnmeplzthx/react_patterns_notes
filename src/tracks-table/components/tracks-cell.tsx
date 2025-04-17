@@ -1,4 +1,4 @@
-import { Track } from "../App";
+import { Track } from "./tracks-table";
 import styles from "./tracks-cell.module.css";
 
 export function TracksCell({

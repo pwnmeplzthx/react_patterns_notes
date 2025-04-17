@@ -12,7 +12,6 @@ export const tracksApiContext = React.createContext<TrackApi | null>(null);
 
 export function useTracksApi() {
   const api = React.useContext(tracksApiContext);
-  console.log("api", api);
 
   if (!api) {
     throw new Error("useTracksApi must be used within a TracksApiProvider");

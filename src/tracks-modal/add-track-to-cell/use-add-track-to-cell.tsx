@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Track } from "../../hooks/use-tracks";
+import { Track } from "@/tracks-table";
 import { useFormData } from "../shared/use-form-data";
 import { SelectedCell } from "../shared/types";
 
@@ -23,7 +23,7 @@ export function useAddTrackToCell({
           selectedCell.selectedMonth + 1
         ).padStart(2, "0")}-${String(selectedCell.day).padStart(2, "0")}`,
         task: selectedCell.task,
-        hours: 0
+        hours: selectedCell.hours ?? 0
       });
     } else {
       resetFormData();

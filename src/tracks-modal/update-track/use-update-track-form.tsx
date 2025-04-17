@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Track } from "../../hooks/use-tracks";
+import { Track } from "@/tracks-table";
 import { useFormData } from "../shared/use-form-data";
 
 export function useUpdateTrackForm({

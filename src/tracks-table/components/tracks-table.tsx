@@ -1,30 +1,24 @@
-import { TracksActions } from "./components/tracks-actions";
-import { TracksCell } from "./components/tracks-cell";
-import { TracksTaskRow } from "./components/tracks-task-row";
-import { TableTrack } from "./components/table-track";
-import { TracksSummaryRow } from "./components/tracks-summary-row";
-import { TracksDayHeadCell } from "./components/tracks-day-head-cell";
-import { TracksTable } from "./components/tracks-table";
-import { useTracks } from "./hooks/use-tracks";
-import { useTracksFilter } from "./hooks/use-tracks-filter";
-import { TracksFilters } from "./components/tracks-filters";
-import { useTasks } from "./hooks/use-tasks";
-import { useTableComputing } from "./hooks/use-table-comuting";
-import { useTracksModalOpen } from "./tracks-modal/shared/use-tracks-modal-open";
-import { TableLayout } from "./components/table-layout";
-import { ActionButton } from "./components/action-button";
-import { TrackModalProvider } from "./tracks-modal/shared/track-modal-provider";
-import { AddTrackModal } from "./tracks-modal/add-track/add-track-modal";
-import { AddTrackToCellModal } from "./tracks-modal/add-track-to-cell/add-track-to-cell-modal";
-import { UpdateTrackModal } from "./tracks-modal";
-
-export interface Track {
-  id: string;
-  name: string;
-  task: string;
-  hours: number;
-  date: string;
-}
+import { TracksActions } from "./tracks-actions";
+import { TracksCell } from "./tracks-cell";
+import { TracksTaskRow } from "./tracks-task-row";
+import { TableTrack } from "./table-track";
+import { TracksSummaryRow } from "./tracks-summary-row";
+import { TracksDayHeadCell } from "./tracks-day-head-cell";
+import { TracksTableLayout } from "./tracks-table-layout";
+import { useTracks } from "../hooks/use-tracks";
+import { useTracksFilter } from "../hooks/use-tracks-filter";
+import { TracksFilters } from "./tracks-filters";
+import { useTracksTasks } from "../hooks/use-tracks-tasks";
+import { useTableComputing } from "../hooks/use-table-comuting";
+import { TableLayout } from "./table-layout";
+import { ActionButton } from "./action-button";
+import {
+  useTracksModalOpen,
+  TrackModalProvider,
+  AddTrackModal,
+  AddTrackToCellModal,
+  UpdateTrackModal
+} from "@/tracks-modal";
 
 const AppContent = () => {
   const { trackCreate, trackDelete, trackUpdate, tracks } = useTracks();
@@ -32,7 +26,7 @@ const AppContent = () => {
     tracks
   });
 
-  const { uniqueTasks } = useTasks({
+  const { uniqueTasks } = useTracksTasks({
     tracks: filteredTracks
   });
 
@@ -48,7 +42,7 @@ const AppContent = () => {
         actions={<ActionButton onClick={createClick}>Add Track</ActionButton>}
       />
 
-      <TracksTable
+      <TracksTableLayout
         tasks={uniqueTasks}
         renderDays={currentDayRef =>
           visibleDays.map(day => (
@@ -102,7 +96,7 @@ const AppContent = () => {
             getDayTotal={getDayTotal}
           />
         }
-      ></TracksTable>
+      />
 
       <AddTrackModal trackCreate={trackCreate} />
       <AddTrackToCellModal trackCreate={trackCreate} />
@@ -111,7 +105,7 @@ const AppContent = () => {
   );
 };
 
-export default function App() {
+export function TracksTable() {
   return (
     <TrackModalProvider>
       <AppContent />

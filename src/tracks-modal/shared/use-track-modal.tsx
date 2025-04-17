@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Track } from "../../hooks/use-tracks";
 import { SelectedCell } from "./types";
+import { Track } from "@/tracks-table";
 
 export function useTrackModal() {
   const [isCreate, setIsCreate] = useState(false);

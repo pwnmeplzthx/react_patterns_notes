@@ -1,4 +1,4 @@
-import { Track } from "../../App";
+import { Track } from "@/tracks-table";
 import styles from "./track-form.module.css";
 
 export function TrackForm({
@@ -58,7 +58,7 @@ export function TrackForm({
           value={formData.hours}
           onChange={onInputChange}
           min="0"
-          step="0.5"
+          step="0.001"
           required
           disabled={disabled.hours}
         />

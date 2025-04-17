@@ -7,6 +7,7 @@
 ### Разделы
 
 - [Decomposition patterns](/docs/decomposition_patterns.md)
+- [Architectural patterns](/docs/architectural_patterns.md)
 
 ### Запуск проекта
 
