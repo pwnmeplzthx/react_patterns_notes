@@ -30,26 +30,23 @@ export default defineConfig([
       "boundaries/elements": [
         {
           type: "router",
-          pattern: "router",
+          pattern: "router"
         },
         {
-          type: "tasks-list",
-          pattern: "tasks-list",
+          type: "modules",
+          pattern: "modules/*",
+          capture: ["module"]
         },
         {
-          type: "tracks-modal",
-          pattern: "tracks-modal",
-        },
-        {
-          type: "tracks-table",
-          pattern: "tracks-table",
-        },
+          type: "interfaces",
+          pattern: "interfaces/*"
+        }
       ],
       "import/resolver": {
         typescript: {
-          alwaysTryTypes: true,
-        },
-      },
+          alwaysTryTypes: true
+        }
+      }
     },
     rules: {
       "boundaries/entry-point": [
@@ -58,13 +55,46 @@ export default defineConfig([
           default: "disallow",
           rules: [
             {
-              target: ["tracks-table", "tasks-list", "tracks-modal", "router"],
-              allow: "index.ts",
+              target: ["modules", "router"],
+              allow: "index.ts"
             },
-          ],
-        },
+            {
+              target: ["interfaces"],
+              allow: "*"
+            }
+          ]
+        }
       ],
-    },
+      "boundaries/element-types": [
+        2,
+        {
+          // disallow importing any element by default
+          default: "allow",
+          rules: [
+            {
+              from: ["interfaces"],
+              disallow: ["router", "modules"]
+            },
+            {
+              from: ["modules"],
+              disallow: ["router"]
+            },
+            {
+              from: ["modules"],
+              message: "Module must not import other module",
+              disallow: [
+                [
+                  "modules",
+                  {
+                    module: "!${module}"
+                  }
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    }
   },
   eslintConfigPrettier,
   eslintPluginPrettierRecommended

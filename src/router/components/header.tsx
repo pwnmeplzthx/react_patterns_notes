@@ -7,7 +7,7 @@ export const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.headerContent}>
-        <h1 className={styles.headerTitle}>Anti-patterns</h1>
+        <h1 className={styles.headerTitle}>DTT - Dumb task tracker</h1>
         <nav className={styles.headerNav}>
           <Link
             to="/tracks"
